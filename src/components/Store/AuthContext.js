@@ -44,11 +44,18 @@ const switchAuthHandler=()=>{
     setLogin((prev)=>!prev)
 }
 
+const logoutHandler=()=>{
+    localStorage.clear()
+    setIsAuthenticate(false)
+}
+
     const values={
         switchAuth:switchAuthHandler,
         isLogin:login,
         authFunction:Auth,
-        isAuthenticate:Authenticate
+        isAuthenticate:Authenticate,
+        logout:logoutHandler
+
     }
     return (
         <AuthContext.Provider value={values} >
