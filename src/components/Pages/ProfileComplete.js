@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './ProfileComplete.module.css';
 
@@ -14,11 +14,22 @@ const token=localStorage.getItem('token')
         setUrl(e.target.value)
     }
     let Url='https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyByRYI7AGI18SmodbMmvKKyfqdblqRnORc'
+
     const getData=async()=>{
         try{
-            const response=await fetch(`${Url}`)
+            const response=await fetch(`${Url}`, {
+                method:'POST',
+                body:JSON.stringify({
+                    idToken:token
+                }),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
             const data=await response.json()
             console.log(data, 'data')
+            setName(data.displayName) //to set data from resonse(backend) in input field
+            setUrl(data.photoUrl)
         }catch(err){
             console.log(err);
         }
@@ -27,15 +38,20 @@ const token=localStorage.getItem('token')
 
     const postData=async()=>{
         try{
-            const response=await fetch(`${Url}`,{
+            const response=await fetch(Url,{
                 method:'POST',
                 body:JSON.stringify({
                     idToken:token,
                     displayName:name,
                     photoUrl:url,
-                    returnSecureToken:true
-                })
+                    // deleteAttribute: "NULL",
+                    returnSecureToken:false
+                }),
+                headers:{
+                    "Content-Type": 'application/json'
+                }
             })
+            console.log(response, 'response')
             getData()
         }catch(err){
             console.log(err);
@@ -48,6 +64,10 @@ const token=localStorage.getItem('token')
         e.preventDefault()
         postData();
     }
+
+    useEffect(()=>{
+        getData()
+    },[])
 
   return (
     <Fragment>

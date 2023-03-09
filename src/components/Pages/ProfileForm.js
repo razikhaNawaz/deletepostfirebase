@@ -11,7 +11,7 @@ const ProfileForm = () => {
     </div>
     <div className={classes.para}>
     Your Profile is incomplete
-    <Link>  Complete it</Link>
+    <Link to ="/profileForm">  Complete it</Link>
     </div>
     
     </div>

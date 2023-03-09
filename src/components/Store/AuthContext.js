@@ -29,7 +29,7 @@ const response=await fetch(url,{
     }
 })
 const data=await response.json()
-console.log(data.idToken)
+console.log(data)
 localStorage.setItem('token', data.idToken)
 setIsAuthenticate(true)
 localStorage.setItem('email', userEmail)
