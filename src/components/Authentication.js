@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react'
 import AuthContext from './Store/AuthContext';
 import classes from './Authentication.module.css';
+import { Link } from 'react-router-dom';
 
 const Authentication = () => {
     const [email, setEmail]=useState();
@@ -47,6 +48,11 @@ const Authentication = () => {
                     isLogin ? 'creare account' : 'login with account'
                 }
             </button>
+            <div className={classes.link}>
+            <Link to="/ForgotPassword">
+                Forgot Password
+            </Link>
+            </div>
             </div>
         </form>
         </div>

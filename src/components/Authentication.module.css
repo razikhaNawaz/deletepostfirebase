@@ -10,7 +10,7 @@
 .form {
    /* border: 1px solid red; */
     width: 400px;
-    height: 200px;
+    height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,7 +32,16 @@
 }
 .form .buttonParent{
     /* border: 1px solid red; */
-    width: 100%;
+    width: 200px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    
+}
+.form .buttonParent button{
+    margin-top: 20px;
+}
+.link{
+    display: flex;
+    justify-content: center;
 }
