@@ -4,6 +4,12 @@ const ExpenseContext=React.createContext();
 
 export const ExpenseContextProvider=(props)=>{
 const [expense, setExpense]=useState([])
+const [isEditing, setIsEditing]= useState(false)
+
+const [id, setId]=useState(null);
+const [amount, setAmount]=useState(null);
+const [descript, setDescript]=useState(null)
+const [category, setCategory]=useState(null)
 
 const email=localStorage.getItem('email').replace(/[@,.]/g,'')
 let url='https://react-expense-a0c95-default-rtdb.firebaseio.com'
@@ -44,9 +50,44 @@ const postData=async(obj)=>{
     }
 }
 
+const putData=async(id, obj)=>{
+    try {
+        const response=await fetch(`${url}/${email}/${id}.json`,{
+            method:'PUT',
+            body:JSON.stringify(obj),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        console.log(response);
+        getData()
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const addExpenseHandler=(newExpense)=>{
 postData(newExpense)
 console.log('add expense called')
+}
+
+const editHandler=(id, amount, description, category)=>{
+setIsEditing(true)
+setId(id)
+setAmount(amount)
+setDescript(description)
+setCategory(category)
+setIsEditing(false)
+console.log(id, amount, description, category);
+}
+
+const updateHandler=(id, obj)=>{
+    putData(id, obj)
+}
+
+const changeIsEditingHandler=()=>{
+    setIsEditing(false)
 }
 
 useEffect(()=>{
@@ -55,7 +96,15 @@ useEffect(()=>{
 
     const values={
         expenses:expense,
-        addExpense:addExpenseHandler
+        addExpense:addExpenseHandler,
+        isEditing: isEditing,
+        edit: editHandler,
+        id:id,
+        amount:amount,
+        description:descript,
+        category:category,
+        update:updateHandler,
+        changeIsEditing:changeIsEditingHandler
 
     }
     return (

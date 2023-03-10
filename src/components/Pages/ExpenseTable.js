@@ -3,6 +3,12 @@ import ExpenseContext from '../Store/ExpenseContext'
 
 const ExpenseTable = () => {
     const expenseCntxt=useContext(ExpenseContext)
+
+
+    const editHandler=(id, amount, description, category)=>{
+        expenseCntxt.edit(id, amount, description, category)
+        
+    }
   return (
     <div>
         <table className="table">
@@ -26,7 +32,7 @@ const ExpenseTable = () => {
             <td>{expense.description}</td>
             <td>{expense.category}</td>
             <td>
-            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-primary" onClick={editHandler.bind(null, expense.id,expense.amount,expense.description,expense.category)}>Edit</button>
             </td>
             <td>
             <button type="button" class="btn btn-danger">Delete</button>
