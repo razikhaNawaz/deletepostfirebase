@@ -66,7 +66,7 @@ const token=localStorage.getItem('token')
     }
 
     useEffect(()=>{
-        getData()
+        getData();
     },[])
 
   return (

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import classes from './ProfileForm.module.css';
 import Verification from './Verification';
 
+import ExpenseForm from './ExpenseForm';
+
 const ProfileForm = () => {
   return (
     <Fragment>
@@ -21,6 +23,8 @@ const ProfileForm = () => {
     <div className={classes.Verification}>
     <Verification />
     </div>
+    
+    <ExpenseForm />
     </Fragment>
   )
 }

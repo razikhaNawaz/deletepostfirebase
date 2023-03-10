@@ -1,0 +1,10 @@
+.parent{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid blue; */
+    margin-top: 15px;
+}
+.form{
+    width: 40%;
+}

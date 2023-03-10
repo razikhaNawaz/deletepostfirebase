@@ -31,6 +31,7 @@ const Authentication = () => {
     }
   return (
     <Fragment>
+        
         <div className={classes.parent}>
         <form  onSubmit={submitHandler} className={classes.form}>
             <label>Email</label>

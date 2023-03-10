@@ -30,9 +30,12 @@ const response=await fetch(url,{
 })
 const data=await response.json()
 console.log(data)
-localStorage.setItem('token', data.idToken)
-setIsAuthenticate(true)
-localStorage.setItem('email', userEmail)
+if(!data.error){
+    localStorage.setItem('token', data.idToken)
+    setIsAuthenticate(true)
+    localStorage.setItem('email', userEmail)
+}
+
 }
 catch(err){
 console.log(err);
