@@ -4,6 +4,7 @@ import classes from './ProfileForm.module.css';
 import Verification from './Verification';
 
 import ExpenseForm from './ExpenseForm';
+import ExpenseTable from './ExpenseTable';
 
 const ProfileForm = () => {
   return (
@@ -25,6 +26,7 @@ const ProfileForm = () => {
     </div>
     
     <ExpenseForm />
+    <ExpenseTable />
     </Fragment>
   )
 }

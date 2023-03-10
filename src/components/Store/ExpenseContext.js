@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ExpenseContext=React.createContext();
 
@@ -11,7 +11,12 @@ const getData=async()=>{
     try{
         const response=await fetch(`${url}/${email}.json`);
         const data=await response.json()
-        setExpense(data)
+        let arrayOfData=[];
+        for(let key in data){
+            arrayOfData.push({id:key, ...data[key]})
+        }
+        setExpense(arrayOfData)
+        console.log(arrayOfData);
     }
     catch(err){
         console.log(err);
@@ -44,7 +49,9 @@ postData(newExpense)
 console.log('add expense called')
 }
 
-
+useEffect(()=>{
+    getData()
+},[])
 
     const values={
         expenses:expense,
