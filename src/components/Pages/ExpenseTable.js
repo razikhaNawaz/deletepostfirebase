@@ -9,6 +9,10 @@ const ExpenseTable = () => {
         expenseCntxt.edit(id, amount, description, category)
         
     }
+
+    const deleteHandler=(id)=>{
+      expenseCntxt.deleteData(id)
+    }
   return (
     <div>
         <table className="table">
@@ -35,7 +39,7 @@ const ExpenseTable = () => {
             <button type="button" class="btn btn-primary" onClick={editHandler.bind(null, expense.id,expense.amount,expense.description,expense.category)}>Edit</button>
             </td>
             <td>
-            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-danger" onClick={deleteHandler.bind(null,expense.id)}>Delete</button>
             </td>
       
           </tr>

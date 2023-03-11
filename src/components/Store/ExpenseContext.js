@@ -67,6 +67,18 @@ const putData=async(id, obj)=>{
     }
 }
 
+const deleteHandler=async(id)=>{
+    try{
+        const response=await fetch(`${url}/${email}/${id}.json`,{
+            method:'DELETE'
+        })
+        getData()
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
 const addExpenseHandler=(newExpense)=>{
 postData(newExpense)
 console.log('add expense called')
@@ -78,17 +90,16 @@ setId(id)
 setAmount(amount)
 setDescript(description)
 setCategory(category)
-setIsEditing(false)
+
 console.log(id, amount, description, category);
 }
 
 const updateHandler=(id, obj)=>{
     putData(id, obj)
-}
-
-const changeIsEditingHandler=()=>{
     setIsEditing(false)
 }
+ 
+
 
 useEffect(()=>{
     getData()
@@ -104,7 +115,8 @@ useEffect(()=>{
         description:descript,
         category:category,
         update:updateHandler,
-        changeIsEditing:changeIsEditingHandler
+        deleteData:deleteHandler
+        
 
     }
     return (

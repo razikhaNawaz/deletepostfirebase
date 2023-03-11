@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ExpenseContext from '../Store/ExpenseContext';
 import classes from './ExpenseForm.module.css';
 
@@ -35,21 +35,33 @@ expenseCntx.addExpense(obj)
 }
 }
 
+useEffect(()=>{
+if(expenseCntx.isEditing){
+  setAmount(expenseCntx.amount)
+  setDescription(expenseCntx.description)
+  setCategory(expenseCntx.category)
+}else{
+  setAmount("")
+  setDescription("")
+  setCategory("")
+}
+},[expenseCntx.isEditing])
+
   return (
     
     <div className={classes.parent}>
       <form className={classes.form} onSubmit={submitHandler}>
   <div class="mb-3">
     <label className="form-label">Amount</label>
-    <input type="number" className="form-control" value={expenseCntx.isEditing? expenseCntx.amount : amount} onChange={amountHandler}/>
+    <input type="number" className="form-control" value={amount} onChange={amountHandler}/>
     
   </div>
   <div className="mb-3">
     <label  className="form-label">Description</label>
-    <input type="text" className="form-control" value={expenseCntx.isEditing? expenseCntx.description :description} onChange={descriptionHandler}/>
+    <input type="text" className="form-control" value={description} onChange={descriptionHandler}/>
   </div>
   <label  className="form-label">Category</label>
-  <select className="form-select" value={expenseCntx.isEditing? expenseCntx.category :category} onChange={categoryHandler}>
+  <select className="form-select" value={category} onChange={categoryHandler}>
   
   <option selected>Food</option>
   <option value="Rent">Rent</option>
