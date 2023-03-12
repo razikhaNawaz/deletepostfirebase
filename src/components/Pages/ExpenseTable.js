@@ -1,17 +1,34 @@
 import React, { useContext } from 'react'
+import { useDispatch } from 'react-redux'
 import ExpenseContext from '../Store/ExpenseContext'
 
 const ExpenseTable = () => {
-    const expenseCntxt=useContext(ExpenseContext)
+    // const expenseCntxt=useContext(ExpenseContext)
+    const dispatch=useDispatch()
+    const arrayOfData=useSelector((state)=>state.expenseReducer.expenses)
 
 
     const editHandler=(id, amount, description, category)=>{
-        expenseCntxt.edit(id, amount, description, category)
-        
+        // expenseCntxt.edit(id, amount, description, category)
+        dispatch(ExpenseAction.edit(id, amount, description, category))
     }
 
+    const deleteData=async(id)=>{
+      try{
+          const response=await fetch(`${url}/${email}/${id}.json`,{
+              method:'DELETE'
+          })
+          getData()
+          console.log(response)
+      }
+      catch(err){
+          console.log(err);
+      }
+  }
+
     const deleteHandler=(id)=>{
-      expenseCntxt.deleteData(id)
+
+      deleteData(id)
     }
   return (
     <div>
@@ -28,7 +45,7 @@ const ExpenseTable = () => {
     </tr>
   </thead>
   <tbody>
-    {expenseCntxt.expenses.map((expense,index)=>{
+    {arrayOfData.map((expense,index)=>{
         return (
             <tr key={expense.id}>
             <th scope="row">{index+1}</th>

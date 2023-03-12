@@ -73,6 +73,7 @@ const deleteHandler=async(id)=>{
             method:'DELETE'
         })
         getData()
+        console.log(response)
     }
     catch(err){
         console.log(err);

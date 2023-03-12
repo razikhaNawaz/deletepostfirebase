@@ -3,13 +3,14 @@ import React, { useContext } from 'react';
 import './App.css';
 import Authentication from './components/Authentication';
 import ProfileForm from './components/Pages/ProfileForm';
-import AuthContext from './components/Store/AuthContext';
+// import AuthContext from './components/Store/AuthContext';
 import ProfileComplete from './components/Pages/ProfileComplete';
 import { Route, Switch  } from 'react-router-dom';
 import ForgotPssword from './components/Pages/ForgotPssword';
 const App = () => {
-  const AuthCntx=useContext(AuthContext);
-  const isAuthenticate=AuthCntx.isAuthenticate;
+  // const AuthCntx=useContext(AuthContext);
+  // const isAuthenticate=AuthCntx.isAuthenticate;
+  const isAuthenticate=useSelector((state)=>state.authReducer.isAuthenticate)
   
   return (
     <div>
