@@ -27,48 +27,50 @@ const Authentication = () => {
   const passwordHandler = (e) => {
     setPassword(e.target.value);
   };
+  let url;
+  const Auth = async() => {
+    if (login) {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyByRYI7AGI18SmodbMmvKKyfqdblqRnORc";
+    } else {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyByRYI7AGI18SmodbMmvKKyfqdblqRnORc";
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+
+      if (!data.error) {
+        localStorage.setItem("token", data.idToken);
+      //   setIsAuthenticate(true);
+      dispatch(authAction.login())  //this login function from AuthReducer
+
+        localStorage.setItem("email", email);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     // AuthCntx.authFunction(email, password)
     // console.log(email,password)
-    let url;
-    const Auth = async() => {
-      if (login) {
-        url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyByRYI7AGI18SmodbMmvKKyfqdblqRnORc";
-      } else {
-        url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyByRYI7AGI18SmodbMmvKKyfqdblqRnORc";
-      }
+    Auth()
 
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        console.log(data);
-
-        if (!data.error) {
-          localStorage.setItem("token", data.idToken);
-        //   setIsAuthenticate(true);
-        dispatch(authAction.login())  //this login function from AuthReducer
-
-          localStorage.setItem("email", email);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
   };
   return (
     <Fragment>

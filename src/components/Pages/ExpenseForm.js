@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ExpenseContext from '../Store/ExpenseContext';
+import { ExpenseAction } from '../ReduxStore/ExpenseReducer';
+// import ExpenseContext from '../Store/ExpenseContext';
 import classes from './ExpenseForm.module.css';
 
 const ExpenseForm = () => {
@@ -11,10 +12,13 @@ const ExpenseForm = () => {
   const amountForEditing=useSelector((state)=>state.expenseReducer.amount)
   const descriptionForEditing=useSelector((state)=>state.expenseReducer.description)
   const categoryForEditing=useSelector((state)=>state.expenseReducer.category)
+  const deleted=useSelector((state)=>state.expenseReducer.deleted)
+  const arrayOfData=useSelector((state)=>state.expenseReducer.expenses)
 
   const [amount, setAmount]=useState('')
   const [description, setDescription]= useState('')
   const [category, setCategory]=useState('food')
+  const [show, setShow]=useState(false)
 const amountHandler=(e)=>{
   setAmount(e.target.value)
 }
@@ -99,9 +103,14 @@ if(isEditing){
   putData(obj)
   dispatch(ExpenseAction.update())
 }else{
-postData()
+postData(obj)
 }
 }
+
+let total=0;
+arrayOfData.forEach((exp)=>{
+  total+=Number(exp.amount)
+})
 
 useEffect(()=>{
 if(isEditing){
@@ -115,10 +124,24 @@ if(isEditing){
 }
 },[isEditing])
 
+const showHandler=()=>{
+setShow(!show)
+}
+
+useEffect(()=>{
+  getData()
+},[deleted])
+
+
   return (
     
+    
     <div className={classes.parent}>
-      <form className={classes.form} onSubmit={submitHandler}>
+      <div className={classes.add}>
+      {total>=10000 && <button type="button" className="btn btn-primary mt-5 mb-5 me-5">Premium</button>}
+      <button type="button" className="btn btn-primary mt-5 mb-5" onClick={showHandler}>{show ? 'close' : '+Add Expense'}</button>
+      </div>
+      {show && <form className={classes.form} onSubmit={submitHandler}>
   <div class="mb-3">
     <label className="form-label">Amount</label>
     <input type="number" className="form-control" value={amount} onChange={amountHandler}/>
@@ -137,8 +160,9 @@ if(isEditing){
 </select>
   
   <button type="submit" className="btn btn-primary mt-5" >{isEditing ?'Update' : 'Save'}</button>
-</form>
+</form>}
     </div>
+ 
   )
 }
 

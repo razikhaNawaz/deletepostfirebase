@@ -7,6 +7,7 @@ import ProfileForm from './components/Pages/ProfileForm';
 import ProfileComplete from './components/Pages/ProfileComplete';
 import { Route, Switch  } from 'react-router-dom';
 import ForgotPssword from './components/Pages/ForgotPssword';
+import { useSelector } from 'react-redux';
 const App = () => {
   // const AuthCntx=useContext(AuthContext);
   // const isAuthenticate=AuthCntx.isAuthenticate;

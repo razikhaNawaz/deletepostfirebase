@@ -1,25 +1,36 @@
-import React, { useContext } from 'react'
-import { useDispatch } from 'react-redux'
-import ExpenseContext from '../Store/ExpenseContext'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { authAction } from '../ReduxStore/AuthReducer'
+import { ExpenseAction } from '../ReduxStore/ExpenseReducer'
+// import ExpenseContext from '../Store/ExpenseContext'
 
 const ExpenseTable = () => {
     // const expenseCntxt=useContext(ExpenseContext)
     const dispatch=useDispatch()
     const arrayOfData=useSelector((state)=>state.expenseReducer.expenses)
+    
 
 
     const editHandler=(id, amount, description, category)=>{
         // expenseCntxt.edit(id, amount, description, category)
-        dispatch(ExpenseAction.edit(id, amount, description, category))
+        let obj={
+          id:id,
+          amount:amount,
+          description:description,
+          category:category
+        }
+        dispatch(ExpenseAction.edit(obj)) //in redux we cant pass more than one argument, to pass more than one argument we have to store in object and den pass
     }
-
-    const deleteData=async(id)=>{
+    const email=localStorage.getItem('email').replace(/[@,.]/g,'')
+    let url='https://react-expense-a0c95-default-rtdb.firebaseio.com'
+    const deleteExpense=async(id)=>{
       try{
           const response=await fetch(`${url}/${email}/${id}.json`,{
               method:'DELETE'
           })
-          getData()
+          
           console.log(response)
+          dispatch(ExpenseAction.deleteData())
       }
       catch(err){
           console.log(err);
@@ -28,8 +39,13 @@ const ExpenseTable = () => {
 
     const deleteHandler=(id)=>{
 
-      deleteData(id)
+      deleteExpense(id)
     }
+
+    let totalAmount=0;
+   arrayOfData.forEach((expense)=>{
+    totalAmount+=Number(expense.amount)
+   })
   return (
     <div>
         <table className="table">
@@ -66,6 +82,10 @@ const ExpenseTable = () => {
     
   </tbody>
 </table>
+<div style={{display:'flex',justifyContent:'space-between', marginRight:'200px'}}>
+  <div>Total expenses</div>
+  <div>${totalAmount}</div>
+</div>
     </div>
   )
 }

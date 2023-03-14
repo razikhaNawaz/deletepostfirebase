@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
+import { useDispatch } from 'react-redux'
+import { authAction } from '../ReduxStore/AuthReducer'
 import AuthContext from '../Store/AuthContext'
 
 const Verification = () => {
-
-    const Cntxt=useContext(AuthContext);
+const dispatch=useDispatch()
+    // const Cntxt=useContext(AuthContext);
     const token=localStorage.getItem('token')
 let url='https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyByRYI7AGI18SmodbMmvKKyfqdblqRnORc'
     const verifyEmail=async()=>{
@@ -25,7 +27,8 @@ let url='https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIza
     }
 
     const logoutHandler=()=>{
-        Cntxt.logout()
+        // Cntxt.logout()
+        dispatch(authAction.logout())
     }
   return (
     <div>
