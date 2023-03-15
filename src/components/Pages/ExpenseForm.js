@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExpenseAction } from '../ReduxStore/ExpenseReducer';
+import { ThemeReducerAction } from '../ReduxStore/ThemeReducer';
 // import ExpenseContext from '../Store/ExpenseContext';
 import classes from './ExpenseForm.module.css';
 
@@ -128,6 +129,21 @@ const showHandler=()=>{
 setShow(!show)
 }
 
+const themeChangeHandler=()=>{
+  dispatch(ThemeReducerAction.ModeChange())
+}
+
+const heading=['Expense', 'Category','Description']
+const ExpToDwnld=[heading]
+arrayOfData.forEach((exp)=>{
+  ExpToDwnld.push([exp.amount, exp.category,exp.description])
+})
+const ExpToDwnld2=ExpToDwnld.map((expense)=>{
+  return expense.join(',')
+}).join('\n')
+const blob=new Blob([ExpToDwnld2])
+const urlToDwnld=URL.createObjectURL(blob)
+
 useEffect(()=>{
   getData()
 },[deleted])
@@ -138,6 +154,11 @@ useEffect(()=>{
     
     <div className={classes.parent}>
       <div className={classes.add}>
+      {total>=10000 && <button type="button" className="btn btn-primary mt-5 mb-5 me-5">
+       <a href={urlToDwnld} download="expense.csv" style={{color:'white',textDecoration:'none'}}> Download Expenses</a>
+       
+        </button>}
+      {total>=10000 && <button type="button" className="btn btn-primary mt-5 mb-5 me-5" onClick={themeChangeHandler}>Change Theme</button>}
       {total>=10000 && <button type="button" className="btn btn-primary mt-5 mb-5 me-5">Premium</button>}
       <button type="button" className="btn btn-primary mt-5 mb-5" onClick={showHandler}>{show ? 'close' : '+Add Expense'}</button>
       </div>

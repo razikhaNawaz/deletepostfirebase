@@ -8,13 +8,16 @@ import ProfileComplete from './components/Pages/ProfileComplete';
 import { Route, Switch  } from 'react-router-dom';
 import ForgotPssword from './components/Pages/ForgotPssword';
 import { useSelector } from 'react-redux';
+import './App.css';
+
 const App = () => {
   // const AuthCntx=useContext(AuthContext);
   // const isAuthenticate=AuthCntx.isAuthenticate;
   const isAuthenticate=useSelector((state)=>state.authReducer.isAuthenticate)
+  const isMode=useSelector((state)=>state.themeReducer.isMode)
   
   return (
-    <div>
+    <div className={isMode ? "app-container" : ''}>
       
       <Switch>
         <Route path="/" exact>
