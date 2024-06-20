@@ -1,0 +1,21 @@
+.parent{
+    display: flex;
+    /* border: 1px solid red; */
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.form{
+    margin-left: 20px;
+ }
+.para{
+   margin-right: 20px;
+   
+}
+.para Link{
+    text-decoration: none;
+}
+.Verification{
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+}
